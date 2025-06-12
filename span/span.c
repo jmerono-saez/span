@@ -4,29 +4,37 @@
 #include <span.h>
 
 static struct {
+	// === COMMON ======
+	
+	uint32_t time;
+	
 	// === RENDERING ===
 	
 	span_pipe_t pipe;
 	
 	// === ANIMATION ===
 	
-	uint32_t (*lerp)(uint32_t u);
-	
+	bool is_lerping;
 	int *value;
-	uint32_t time;
+	
+	uint32_t (*lerp)(uint32_t u);
 	
 	int begin_value, end_value;
 	uint32_t begin_time, end_time;
 } span;
 
 void span_init(span_pipe_t pipe) {
+	// === COMMON ======
+	
+	span.time = 0;
+	
 	// === RENDERING ===
 	
 	span.pipe = pipe;
 	
 	// === ANIMATION ===
 	
-	span.value = NULL;
+	span.is_lerping = false;
 }
 
 int span_length(const char *text) {
@@ -213,26 +221,32 @@ uint32_t span_bounce(uint32_t u) {
 void span_update(uint32_t time) {
 	span.time = time;
 	
-	if (span.value != NULL) {
+	if (span.is_lerping) {
 		if (span.time >= span.end_time) {
-			span.value[0] = span.end_value;
-			span.value = NULL;
+			if (span.value != NULL) {
+				span.value[0] = span.end_value;
+			}
+			
+			span.is_lerping = false;
 		} else {
 			const uint32_t u = ((span.time - span.begin_time) * SPAN_LERP_N) / (span.end_time - span.begin_time);
 			const uint32_t v = span.lerp(u);
 			
-			span.value[0] = span.begin_value + ((span.end_value - span.begin_value) * (int)(v)) / SPAN_LERP_N;
+			if (span.value != NULL) {
+				span.value[0] = span.begin_value + ((span.end_value - span.begin_value) * (int)(v)) / SPAN_LERP_N;
+			}
 		}
 	}
 }
 
 void span_lerp(int *value, int begin_value, int end_value, uint32_t time, uint32_t (*lerp)(uint32_t u)) {
-	span.lerp = lerp;
+	span.is_lerping = true;
 	span.value = value;
+	
+	span.lerp = lerp;
 	
 	span.begin_value = begin_value;
 	span.end_value = end_value;
-	
 	span.begin_time = span.time;
 	span.end_time = span.time + time;
 }
