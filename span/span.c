@@ -90,7 +90,7 @@ void span_draw_unit_text(const span_unit_t *unit, int line) {
 	const span_font_t *font = unit->font;
 	
 	const int s = font->w * span_length(unit->text);
-	const int l = (unit->align * (unit->w - s)) / 2;
+	const int l = ((int)(unit->align) * (unit->w - s)) / 2;
 	
 	span.pipe.span(l, unit->color_0);
 	
