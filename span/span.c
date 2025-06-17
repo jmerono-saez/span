@@ -3,9 +3,6 @@
 #include <stdint.h>
 #include <span.h>
 
-#define __min(u, v) (((u) < (v)) ? (u) : (v))
-#define __max(u, v) (((u) < (v)) ? (v) : (u))
-
 static struct {
 	// === COMMON ======
 	
