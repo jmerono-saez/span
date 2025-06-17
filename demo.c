@@ -60,6 +60,100 @@ const span_pipe_t sdl2_pipe = (const span_pipe_t) {
 	.mask = sdl2_mask,
 };
 
+void menu_on_enter(const span_window_t *window, int i) {
+	for (int j = 0; j < window->items[i].n; j++) {
+		span_unit_t *unit = window->items[i].units + j;
+		unit->color_1 = 0xFFFF;
+		
+		if (i == 6) {
+			unit->color_0 = 0xF727;
+		}
+		
+		if (i == 7) {
+			unit->color_0 = 0xF277;
+		}
+		
+		if (i == 8) {
+			unit->color_0 = 0xF751;
+		}
+		
+		if (i == 9) {
+			unit->color_0 = 0xF272;
+		}
+		
+		if (i == 10) {
+			unit->color_0 = 0xF257;
+		}
+		
+		if (i == 11) {
+			unit->color_0 = 0xF771;
+		}
+		
+		if (i == 12) {
+			unit->color_0 = 0xF722;
+		}
+		
+		if (i == 13) {
+			unit->color_0 = 0xF437;
+		}
+		
+		if (i == 14) {
+			unit->color_0 = 0xF666;
+		}
+		
+		if (i == 15) {
+			unit->color_0 = 0xF666;
+		}
+	}
+}
+
+void menu_on_leave(const span_window_t *window, int i) {
+	for (int j = 0; j < window->items[i].n; j++) {
+		span_unit_t *unit = window->items[i].units + j;
+		unit->color_0 = 0xF000;
+		
+		if (i == 6) {
+			unit->color_1 = 0xFF5F;
+		}
+		
+		if (i == 7) {
+			unit->color_1 = 0xF5FF;
+		}
+		
+		if (i == 8) {
+			unit->color_1 = 0xFFB3;
+		}
+		
+		if (i == 9) {
+			unit->color_1 = 0xF5F5;
+		}
+		
+		if (i == 10) {
+			unit->color_1 = 0xF5BF;
+		}
+		
+		if (i == 11) {
+			unit->color_1 = 0xFFF3;
+		}
+		
+		if (i == 12) {
+			unit->color_1 = 0xFF55;
+		}
+		
+		if (i == 13) {
+			unit->color_1 = 0xF97F;
+		}
+		
+		if (i == 14) {
+			unit->color_1 = 0xFDDD;
+		}
+		
+		if (i == 15) {
+			unit->color_1 = 0xFDDD;
+		}
+	}
+}
+
 int main(void) {
 	SDL_Init(SDL_INIT_VIDEO);
 	
@@ -70,48 +164,52 @@ int main(void) {
 	
 	span_unit_t icon_units[] = {
 		(span_unit_t) {
+			.type = SPAN_UNIT_NONE,
+			.color_0 = 0xF000,
+			.w = 24,
+		},
+		(span_unit_t) {
 			.type = SPAN_UNIT_TEXT,
-			.color_0 = SPAN_COLOR(3, 0, 3),
-			.color_1 = SPAN_COLOR(15, 7, 15),
-			.w = 240,
-			.align = SPAN_ALIGN_CENTER,
+			.color_0 = 0xF000,
+			.color_1 = 0xFF5F,
+			.w = 160,
+			.align = SPAN_ALIGN_LEFT,
 			.text = "Alarma en 6h 58m",
 			.font = &font_terminus_12x24,
 		},
-	};
-	
-	/*
-	span_unit_t icon_units[] = {
 		(span_unit_t) {
 			.type = SPAN_UNIT_NONE,
-			.color_0 = SPAN_COLOR(3, 0, 3),
+			.color_0 = 0xF000,
 			.w = 4,
 		},
 		(span_unit_t) {
-			.type = SPAN_UNIT_TEXT,
-			.color_0 = SPAN_COLOR(3, 0, 3),
-			.color_1 = SPAN_COLOR(15, 7, 15),
-			.w = 208,
-			.align = SPAN_ALIGN_LEFT,
-			.text = "Alarma en 7h 18m",
-			.font = &font_terminus_12x24,
-		},
-		(span_unit_t) {
 			.type = SPAN_UNIT_ICON,
-			.color_0 = SPAN_COLOR(3, 0, 3),
-			.color_1 = SPAN_COLOR(15, 15, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xFFFF,
 			.w = 28,
 			.align = SPAN_ALIGN_CENTER,
 			.icon = &icon_battery_3_28x28,
 		},
+		(span_unit_t) {
+			.type = SPAN_UNIT_NONE,
+			.color_0 = 0xF000,
+			.w = 24,
+		},
 	};
-	*/
+	
+	span_unit_t icon_border_units[] = {
+		(span_unit_t) {
+			.type = SPAN_UNIT_NONE,
+			.color_0 = 0xFF5F,
+			.w = 240,
+		},
+	};
 	
 	span_unit_t hour_units[] = {
 		(span_unit_t) {
 			.type = SPAN_UNIT_TEXT,
-			.color_0 = SPAN_COLOR(0, 0, 0),
-			.color_1 = SPAN_COLOR(15, 15, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xFFFF,
 			.w = 240,
 			.align = SPAN_ALIGN_LEFT,
 			.text = "12",
@@ -122,8 +220,8 @@ int main(void) {
 	span_unit_t minute_units[] = {
 		(span_unit_t) {
 			.type = SPAN_UNIT_TEXT,
-			.color_0 = SPAN_COLOR(0, 0, 0),
-			.color_1 = SPAN_COLOR(15, 15, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xFFFF,
 			.w = 240,
 			.align = SPAN_ALIGN_RIGHT,
 			.text = "34",
@@ -134,8 +232,8 @@ int main(void) {
 	span_unit_t date_units[] = {
 		(span_unit_t) {
 			.type = SPAN_UNIT_TEXT,
-			.color_0 = SPAN_COLOR(0, 0, 0),
-			.color_1 = SPAN_COLOR(11, 11, 11),
+			.color_0 = 0xF000,
+			.color_1 = 0xFBBB,
 			.w = 240,
 			.align = SPAN_ALIGN_CENTER,
 			.text = "18 de septiembre",
@@ -154,21 +252,21 @@ int main(void) {
 	span_unit_t menu_0_units[] = {
 		(span_unit_t) {
 			.type = SPAN_UNIT_ICON,
-			.color_0 = SPAN_COLOR(7, 0, 7),
-			.color_1 = SPAN_COLOR(15, 15, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xFF5F,
 			.w = 44,
 			.align = SPAN_ALIGN_CENTER,
 			.icon = &icon_alarm_40x40,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_NONE,
-			.color_0 = SPAN_COLOR(7, 0, 7),
+			.color_0 = 0xF000,
 			.w = 4,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_TEXT,
-			.color_0 = SPAN_COLOR(7, 0, 7),
-			.color_1 = SPAN_COLOR(15, 15, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xFF5F,
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
 			.text = "Alarmas",
@@ -179,24 +277,24 @@ int main(void) {
 	span_unit_t menu_1_units[] = {
 		(span_unit_t) {
 			.type = SPAN_UNIT_ICON,
-			.color_0 = SPAN_COLOR(3, 0, 3),
-			.color_1 = SPAN_COLOR(15, 7, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xF5FF,
 			.w = 44,
 			.align = SPAN_ALIGN_CENTER,
 			.icon = &icon_alarm_40x40,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_NONE,
-			.color_0 = SPAN_COLOR(3, 0, 3),
+			.color_0 = 0xF000,
 			.w = 4,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_TEXT,
-			.color_0 = SPAN_COLOR(3, 0, 3),
-			.color_1 = SPAN_COLOR(15, 7, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xF5FF,
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
-			.text = "Alarmas",
+			.text = "Cron\xA2metro",
 			.font = &font_terminus_12x24,
 		},
 	};
@@ -204,24 +302,24 @@ int main(void) {
 	span_unit_t menu_2_units[] = {
 		(span_unit_t) {
 			.type = SPAN_UNIT_ICON,
-			.color_0 = SPAN_COLOR(7, 3, 0),
-			.color_1 = SPAN_COLOR(15, 15, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xFFB3,
 			.w = 44,
 			.align = SPAN_ALIGN_CENTER,
-			.icon = &icon_celebration_40x40,
+			.icon = &icon_alarm_40x40,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_NONE,
-			.color_0 = SPAN_COLOR(7, 3, 0),
+			.color_0 = 0xF000,
 			.w = 4,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_TEXT,
-			.color_0 = SPAN_COLOR(7, 3, 0),
-			.color_1 = SPAN_COLOR(15, 15, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xFFB3,
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
-			.text = "Cumplea\xA4os",
+			.text = "Temporizador",
 			.font = &font_terminus_12x24,
 		},
 	};
@@ -229,24 +327,24 @@ int main(void) {
 	span_unit_t menu_3_units[] = {
 		(span_unit_t) {
 			.type = SPAN_UNIT_ICON,
-			.color_0 = SPAN_COLOR(3, 1, 0),
-			.color_1 = SPAN_COLOR(15, 9, 7),
+			.color_0 = 0xF000,
+			.color_1 = 0xF5F5,
 			.w = 44,
 			.align = SPAN_ALIGN_CENTER,
-			.icon = &icon_celebration_40x40,
+			.icon = &icon_alarm_40x40,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_NONE,
-			.color_0 = SPAN_COLOR(3, 1, 0),
+			.color_0 = 0xF000,
 			.w = 4,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_TEXT,
-			.color_0 = SPAN_COLOR(3, 1, 0),
-			.color_1 = SPAN_COLOR(15, 9, 7),
+			.color_0 = 0xF000,
+			.color_1 = 0xF5F5,
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
-			.text = "Cumplea\xA4os",
+			.text = "Pulsos (BPM)",
 			.font = &font_terminus_12x24,
 		},
 	};
@@ -254,24 +352,24 @@ int main(void) {
 	span_unit_t menu_4_units[] = {
 		(span_unit_t) {
 			.type = SPAN_UNIT_ICON,
-			.color_0 = SPAN_COLOR(0, 7, 0),
-			.color_1 = SPAN_COLOR(15, 15, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xF5BF,
 			.w = 44,
 			.align = SPAN_ALIGN_CENTER,
-			.icon = &icon_beat_40x40,
+			.icon = &icon_alarm_40x40,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_NONE,
-			.color_0 = SPAN_COLOR(0, 7, 0),
+			.color_0 = 0xF000,
 			.w = 4,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_TEXT,
-			.color_0 = SPAN_COLOR(0, 7, 0),
-			.color_1 = SPAN_COLOR(15, 15, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xF5BF,
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
-			.text = "Metr\xA2nomo",
+			.text = "Calendario",
 			.font = &font_terminus_12x24,
 		},
 	};
@@ -279,24 +377,24 @@ int main(void) {
 	span_unit_t menu_5_units[] = {
 		(span_unit_t) {
 			.type = SPAN_UNIT_ICON,
-			.color_0 = SPAN_COLOR(0, 3, 0),
-			.color_1 = SPAN_COLOR(7, 15, 7),
+			.color_0 = 0xF000,
+			.color_1 = 0xFFF3,
 			.w = 44,
 			.align = SPAN_ALIGN_CENTER,
-			.icon = &icon_beat_40x40,
+			.icon = &icon_alarm_40x40,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_NONE,
-			.color_0 = SPAN_COLOR(0, 3, 0),
+			.color_0 = 0xF000,
 			.w = 4,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_TEXT,
-			.color_0 = SPAN_COLOR(0, 3, 0),
-			.color_1 = SPAN_COLOR(7, 15, 7),
+			.color_0 = 0xF000,
+			.color_1 = 0xFFF3,
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
-			.text = "Metr\xA2nomo",
+			.text = "Linterna",
 			.font = &font_terminus_12x24,
 		},
 	};
@@ -304,24 +402,24 @@ int main(void) {
 	span_unit_t menu_6_units[] = {
 		(span_unit_t) {
 			.type = SPAN_UNIT_ICON,
-			.color_0 = SPAN_COLOR(0, 5, 7),
-			.color_1 = SPAN_COLOR(15, 15, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xFF55,
 			.w = 44,
 			.align = SPAN_ALIGN_CENTER,
-			.icon = &icon_dice_40x40,
+			.icon = &icon_alarm_40x40,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_NONE,
-			.color_0 = SPAN_COLOR(0, 5, 7),
+			.color_0 = 0xF000,
 			.w = 4,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_TEXT,
-			.color_0 = SPAN_COLOR(0, 5, 7),
-			.color_1 = SPAN_COLOR(15, 15, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xFF55,
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
-			.text = "Dados",
+			.text = "Afinador",
 			.font = &font_terminus_12x24,
 		},
 	};
@@ -329,25 +427,163 @@ int main(void) {
 	span_unit_t menu_7_units[] = {
 		(span_unit_t) {
 			.type = SPAN_UNIT_ICON,
-			.color_0 = SPAN_COLOR(0, 2, 3),
-			.color_1 = SPAN_COLOR(7, 11, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xF97F,
 			.w = 44,
 			.align = SPAN_ALIGN_CENTER,
-			.icon = &icon_dice_40x40,
+			.icon = &icon_alarm_40x40,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_NONE,
-			.color_0 = SPAN_COLOR(0, 2, 3),
+			.color_0 = 0xF000,
 			.w = 4,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_TEXT,
-			.color_0 = SPAN_COLOR(0, 2, 3),
-			.color_1 = SPAN_COLOR(7, 11, 15),
+			.color_0 = 0xF000,
+			.color_1 = 0xF97F,
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
-			.text = "Dados",
+			.text = "Guitarra",
 			.font = &font_terminus_12x24,
+		},
+	};
+	
+	span_unit_t menu_8_units[] = {
+		(span_unit_t) {
+			.type = SPAN_UNIT_ICON,
+			.color_0 = 0xF000,
+			.color_1 = 0xFDDD,
+			.w = 44,
+			.align = SPAN_ALIGN_CENTER,
+			.icon = &icon_alarm_40x40,
+		},
+		(span_unit_t) {
+			.type = SPAN_UNIT_NONE,
+			.color_0 = 0xF000,
+			.w = 4,
+		},
+		(span_unit_t) {
+			.type = SPAN_UNIT_TEXT,
+			.color_0 = 0xF000,
+			.color_1 = 0xFDDD,
+			.w = 192,
+			.align = SPAN_ALIGN_LEFT,
+			.text = "Transferir",
+			.font = &font_terminus_12x24,
+		},
+	};
+	
+	span_unit_t menu_9_units[] = {
+		(span_unit_t) {
+			.type = SPAN_UNIT_ICON,
+			.color_0 = 0xF000,
+			.color_1 = 0xFDDD,
+			.w = 44,
+			.align = SPAN_ALIGN_CENTER,
+			.icon = &icon_alarm_40x40,
+		},
+		(span_unit_t) {
+			.type = SPAN_UNIT_NONE,
+			.color_0 = 0xF000,
+			.w = 4,
+		},
+		(span_unit_t) {
+			.type = SPAN_UNIT_TEXT,
+			.color_0 = 0xF000,
+			.color_1 = 0xFDDD,
+			.w = 192,
+			.align = SPAN_ALIGN_LEFT,
+			.text = "Configurar",
+			.font = &font_terminus_12x24,
+		},
+	};
+	
+	span_unit_t text_scroll_1_units[] = {
+		(span_unit_t) {
+			.type = SPAN_UNIT_NONE,
+			.color_0 = SPAN_COLOR(0, 0, 0),
+			.w = 4,
+		},
+		(span_unit_t) {
+			.type = SPAN_UNIT_TEXT,
+			.color_0 = SPAN_COLOR(0, 0, 0),
+			.color_1 = SPAN_COLOR(0, 15, 15),
+			.w = 232,
+			.align = SPAN_ALIGN_CENTER,
+			.text = "Hey! Don't mind me, I'm just testing scrolling <3.",
+			.font = &font_terminus_12x24,
+		},
+		(span_unit_t) {
+			.type = SPAN_UNIT_NONE,
+			.color_0 = SPAN_COLOR(0, 0, 0),
+			.w = 4,
+		},
+	};
+	
+	span_unit_t text_scroll_2_units[] = {
+		(span_unit_t) {
+			.type = SPAN_UNIT_NONE,
+			.color_0 = SPAN_COLOR(0, 0, 0),
+			.w = 4,
+		},
+		(span_unit_t) {
+			.type = SPAN_UNIT_TEXT,
+			.color_0 = SPAN_COLOR(0, 0, 0),
+			.color_1 = SPAN_COLOR(15, 15, 0),
+			.w = 232,
+			.align = SPAN_ALIGN_CENTER,
+			.text = "Now I'm just testing different lengths!",
+			.font = &font_terminus_12x24,
+		},
+		(span_unit_t) {
+			.type = SPAN_UNIT_NONE,
+			.color_0 = SPAN_COLOR(0, 0, 0),
+			.w = 4,
+		},
+	};
+	
+	span_unit_t text_scroll_3_units[] = {
+		(span_unit_t) {
+			.type = SPAN_UNIT_NONE,
+			.color_0 = SPAN_COLOR(0, 0, 0),
+			.w = 4,
+		},
+		(span_unit_t) {
+			.type = SPAN_UNIT_TEXT,
+			.color_0 = SPAN_COLOR(0, 0, 0),
+			.color_1 = SPAN_COLOR(15, 0, 15),
+			.w = 232,
+			.align = SPAN_ALIGN_CENTER,
+			.text = "And this one is meant to be incredibly huge and to scroll quite far.",
+			.font = &font_terminus_12x24,
+		},
+		(span_unit_t) {
+			.type = SPAN_UNIT_NONE,
+			.color_0 = SPAN_COLOR(0, 0, 0),
+			.w = 4,
+		},
+	};
+	
+	span_unit_t text_scroll_4_units[] = {
+		(span_unit_t) {
+			.type = SPAN_UNIT_NONE,
+			.color_0 = SPAN_COLOR(0, 0, 0),
+			.w = 4,
+		},
+		(span_unit_t) {
+			.type = SPAN_UNIT_TEXT,
+			.color_0 = SPAN_COLOR(0, 0, 0),
+			.color_1 = SPAN_COLOR(15, 15, 15),
+			.w = 232,
+			.align = SPAN_ALIGN_CENTER,
+			.text = "This barely scrolls.",
+			.font = &font_terminus_12x24,
+		},
+		(span_unit_t) {
+			.type = SPAN_UNIT_NONE,
+			.color_0 = SPAN_COLOR(0, 0, 0),
+			.w = 4,
 		},
 	};
 	
@@ -355,8 +591,18 @@ int main(void) {
 		(span_object_t) {
 			.units = icon_units,
 			.n = sizeof(icon_units) / sizeof(span_unit_t),
-			.h = 36,
+			.h = 34,
 			.is_hoverable = true,
+			.is_fixed = true,
+			.on_enter = NULL,
+			.on_leave = NULL,
+			.on_press = NULL,
+		},
+		(span_object_t) {
+			.units = icon_border_units,
+			.n = sizeof(icon_units) / sizeof(span_unit_t),
+			.h = 2,
+			.is_hoverable = false,
 			.is_fixed = true,
 			.on_enter = NULL,
 			.on_leave = NULL,
@@ -365,7 +611,7 @@ int main(void) {
 		(span_object_t) {
 			.units = hour_units,
 			.n = sizeof(hour_units) / sizeof(span_unit_t),
-			.h = 104,
+			.h = 100,
 			.is_hoverable = false,
 			.is_fixed = false,
 			.on_enter = NULL,
@@ -375,7 +621,7 @@ int main(void) {
 		(span_object_t) {
 			.units = minute_units,
 			.n = sizeof(minute_units) / sizeof(span_unit_t),
-			.h = 104,
+			.h = 100,
 			.is_hoverable = false,
 			.is_fixed = false,
 			.on_enter = NULL,
@@ -385,7 +631,7 @@ int main(void) {
 		(span_object_t) {
 			.units = date_units,
 			.n = sizeof(date_units) / sizeof(span_unit_t),
-			.h = 36,
+			.h = 44,
 			.is_hoverable = false,
 			.is_fixed = false,
 			.on_enter = NULL,
@@ -408,8 +654,18 @@ int main(void) {
 			.h = 44,
 			.is_hoverable = true,
 			.is_fixed = false,
-			.on_enter = NULL,
-			.on_leave = NULL,
+			.on_enter = menu_on_enter,
+			.on_leave = menu_on_leave,
+			.on_press = NULL,
+		},
+		(span_object_t) {
+			.units = menu_1_units,
+			.n = sizeof(menu_1_units) / sizeof(span_unit_t),
+			.h = 44,
+			.is_hoverable = true,
+			.is_fixed = false,
+			.on_enter = menu_on_enter,
+			.on_leave = menu_on_leave,
 			.on_press = NULL,
 		},
 		(span_object_t) {
@@ -418,8 +674,18 @@ int main(void) {
 			.h = 44,
 			.is_hoverable = true,
 			.is_fixed = false,
-			.on_enter = NULL,
-			.on_leave = NULL,
+			.on_enter = menu_on_enter,
+			.on_leave = menu_on_leave,
+			.on_press = NULL,
+		},
+		(span_object_t) {
+			.units = menu_3_units,
+			.n = sizeof(menu_3_units) / sizeof(span_unit_t),
+			.h = 44,
+			.is_hoverable = true,
+			.is_fixed = false,
+			.on_enter = menu_on_enter,
+			.on_leave = menu_on_leave,
 			.on_press = NULL,
 		},
 		(span_object_t) {
@@ -428,14 +694,94 @@ int main(void) {
 			.h = 44,
 			.is_hoverable = true,
 			.is_fixed = false,
-			.on_enter = NULL,
-			.on_leave = NULL,
+			.on_enter = menu_on_enter,
+			.on_leave = menu_on_leave,
+			.on_press = NULL,
+		},
+		(span_object_t) {
+			.units = menu_5_units,
+			.n = sizeof(menu_5_units) / sizeof(span_unit_t),
+			.h = 44,
+			.is_hoverable = true,
+			.is_fixed = false,
+			.on_enter = menu_on_enter,
+			.on_leave = menu_on_leave,
 			.on_press = NULL,
 		},
 		(span_object_t) {
 			.units = menu_6_units,
 			.n = sizeof(menu_6_units) / sizeof(span_unit_t),
 			.h = 44,
+			.is_hoverable = true,
+			.is_fixed = false,
+			.on_enter = menu_on_enter,
+			.on_leave = menu_on_leave,
+			.on_press = NULL,
+		},
+		(span_object_t) {
+			.units = menu_7_units,
+			.n = sizeof(menu_7_units) / sizeof(span_unit_t),
+			.h = 44,
+			.is_hoverable = true,
+			.is_fixed = false,
+			.on_enter = menu_on_enter,
+			.on_leave = menu_on_leave,
+			.on_press = NULL,
+		},
+		(span_object_t) {
+			.units = menu_8_units,
+			.n = sizeof(menu_8_units) / sizeof(span_unit_t),
+			.h = 44,
+			.is_hoverable = true,
+			.is_fixed = false,
+			.on_enter = menu_on_enter,
+			.on_leave = menu_on_leave,
+			.on_press = NULL,
+		},
+		(span_object_t) {
+			.units = menu_9_units,
+			.n = sizeof(menu_9_units) / sizeof(span_unit_t),
+			.h = 44,
+			.is_hoverable = true,
+			.is_fixed = false,
+			.on_enter = menu_on_enter,
+			.on_leave = menu_on_leave,
+			.on_press = NULL,
+		},
+		(span_object_t) {
+			.units = text_scroll_1_units,
+			.n = sizeof(text_scroll_1_units) / sizeof(span_unit_t),
+			.h = 28,
+			.is_hoverable = true,
+			.is_fixed = false,
+			.on_enter = NULL,
+			.on_leave = NULL,
+			.on_press = NULL,
+		},
+		(span_object_t) {
+			.units = text_scroll_2_units,
+			.n = sizeof(text_scroll_2_units) / sizeof(span_unit_t),
+			.h = 28,
+			.is_hoverable = true,
+			.is_fixed = false,
+			.on_enter = NULL,
+			.on_leave = NULL,
+			.on_press = NULL,
+		},
+		(span_object_t) {
+			.units = text_scroll_3_units,
+			.n = sizeof(text_scroll_3_units) / sizeof(span_unit_t),
+			.h = 28,
+			.is_hoverable = true,
+			.is_fixed = false,
+			.on_enter = NULL,
+			.on_leave = NULL,
+			.on_press = NULL,
+		},
+		(span_object_t) {
+			.units = text_scroll_4_units,
+			.n = sizeof(text_scroll_4_units) / sizeof(span_unit_t),
+			.h = 28,
 			.is_hoverable = true,
 			.is_fixed = false,
 			.on_enter = NULL,

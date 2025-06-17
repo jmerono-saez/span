@@ -3,6 +3,9 @@
 #include <stdint.h>
 #include <span.h>
 
+#define __min(u, v) (((u) < (v)) ? (u) : (v))
+#define __max(u, v) (((u) < (v)) ? (v) : (u))
+
 static struct {
 	// === COMMON ======
 	
@@ -82,6 +85,9 @@ int span_size_unit(const span_unit_t *unit) {
 }
 
 void span_draw_unit_text(const span_unit_t *unit, int line) {
+	const int text_scroll_ms = 10;
+	const int text_scroll_margin = 100;
+	
 	if (unit->text == NULL) {
 		span.pipe.span(unit->w, unit->color_0);
 		return;
@@ -89,28 +95,47 @@ void span_draw_unit_text(const span_unit_t *unit, int line) {
 	
 	const span_font_t *font = unit->font;
 	
-	const int s = font->w * span_length(unit->text);
-	const int l = ((int)(unit->align) * (unit->w - s)) / 2;
+	const int text_size = font->w * span_length(unit->text);
 	
-	span.pipe.span(l, unit->color_0);
+	const int view_size = (text_size < unit->w ? text_size : unit->w);
+	const int view_margin = ((int)(unit->align) * (unit->w - view_size)) / 2;
 	
-	for (int i = 0; unit->text[i] != '\x00'; i++) {
+	const int excess = text_size - view_size;
+	const int t = span.time / text_scroll_ms;
+	
+	const int move_offset = t % (excess + text_scroll_margin);
+	const int move_repeat = t / (excess + text_scroll_margin);
+	
+	const int clip_offset = (move_offset < excess ? move_offset : excess);
+	const int offset = (move_repeat % 2 < 1 ? clip_offset : excess - clip_offset);
+	
+	const int start = offset / font->w;
+	const int delta = (offset % font->w) / 8;
+	
+	span.pipe.span(view_margin, unit->color_0);
+	
+	for (int i = start; unit->text[i] != '\x00'; i++) {
 		const int c = (unsigned char)(unit->text[i]) - font->start;
 		const int j = (line + c * font->h) * ((font->w + 15) / 16);
 		
-		span.pipe.mask(font->w, font->array + j, unit->color_0, unit->color_1);
+		const int n = view_size + delta * 8 - ((i - start) * font->w);
+		const int m = (n < font->w ? n : font->w);
+		
+		const int k = (start < i ? 0 : delta);
+		
+		span.pipe.mask(m - (k * 8), (void *)(font->array + j) + k, unit->color_0, unit->color_1);
 	}
 	
-	span.pipe.span(unit->w - (l + s), unit->color_0);
+	span.pipe.span(unit->w - (view_margin + view_size), unit->color_0);
 }
 
 void span_draw_unit_icon(const span_unit_t *unit, int line) {
 	const span_icon_t *icon = unit->icon;
 	
-	const int s = icon->w;
-	const int l = (unit->align * (unit->w - s)) / 2;
+	const int view_size = icon->w;
+	const int view_margin = (unit->align * (unit->w - view_size)) / 2;
 	
-	span.pipe.span(l, unit->color_0);
+	span.pipe.span(view_margin, unit->color_0);
 	
 	if (icon->type == SPAN_ICON_COPY) {
 		const int j = line * icon->w;
@@ -122,7 +147,7 @@ void span_draw_unit_icon(const span_unit_t *unit, int line) {
 		span.pipe.mask(icon->w, icon->array + j, unit->color_0, unit->color_1);
 	}
 	
-	span.pipe.span(unit->w - (l + s), unit->color_0);
+	span.pipe.span(unit->w - (view_margin + view_size), unit->color_0);
 }
 
 void span_draw_unit(const span_unit_t *unit, int h, int line) {
