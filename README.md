@@ -27,3 +27,12 @@ Only the source-code and the header are needed, provided at `include/span.h` and
 ## How do I do X with the library?
 
 Open an issue, and I will be more than willing to help!
+
+## What is inside `font/` and `icon/`?
+
+As the name implies, those contain some fonts and icons to be used with the demo, alongside two utility programs (`png_to_font` and `png_to_icon`) for converting PNG images into a series of source-code and header files.
+
+Regarding the fonts and icons used:
+- "LT superior" font: [Made by Daniel Lyons](https://uncut.wtf/monospace/lt-superior-mono)
+- "Terminus" font: [Available here](https://terminus-font.sourceforge.net)
+- "Material" icon set: [Available here](https://fonts.google.com/icons)
