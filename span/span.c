@@ -82,9 +82,6 @@ int span_size_unit(const span_unit_t *unit) {
 }
 
 void span_draw_unit_text(const span_unit_t *unit, int line) {
-	const int text_scroll_ms = 10;
-	const int text_scroll_margin = 100;
-	
 	if (unit->text == NULL) {
 		span.pipe.span(unit->w, unit->color_0);
 		return;
@@ -98,10 +95,10 @@ void span_draw_unit_text(const span_unit_t *unit, int line) {
 	const int view_margin = ((int)(unit->align) * (unit->w - view_size)) / 2;
 	
 	const int excess = text_size - view_size;
-	const int t = span.time / text_scroll_ms;
+	const int t = span.time / SPAN_TEXT_SCROLL_FRACTION;
 	
-	const int move_offset = t % (excess + text_scroll_margin);
-	const int move_repeat = t / (excess + text_scroll_margin);
+	const int move_offset = t % (excess + SPAN_TEXT_SCROLL_MARGIN);
+	const int move_repeat = t / (excess + SPAN_TEXT_SCROLL_MARGIN);
 	
 	const int clip_offset = (move_offset < excess ? move_offset : excess);
 	const int offset = (move_repeat % 2 < 1 ? clip_offset : excess - clip_offset);

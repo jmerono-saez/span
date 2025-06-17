@@ -11,6 +11,9 @@
 
 #define SPAN_LERP_N 1024
 
+#define SPAN_TEXT_SCROLL_FRACTION 10
+#define SPAN_TEXT_SCROLL_MARGIN   100
+
 typedef struct span_pipe_t span_pipe_t;
 
 typedef struct span_icon_t span_icon_t;
