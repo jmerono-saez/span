@@ -123,6 +123,9 @@ uint32_t span_bounce(uint32_t u);
 void span_update(uint32_t time);
 void span_lerp(int *value, int begin_value, int end_value, uint32_t time, uint32_t (*lerp)(uint32_t u));
 
+void span_edit_color_0(const span_window_t *window, int i, uint16_t color_0);
+void span_edit_color_1(const span_window_t *window, int i, uint16_t color_1);
+
 // === INTERACTS ===
 
 void span_goto(span_window_t *window, int i);

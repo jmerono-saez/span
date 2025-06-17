@@ -61,96 +61,90 @@ const span_pipe_t sdl2_pipe = (const span_pipe_t) {
 };
 
 void menu_on_enter(const span_window_t *window, int i) {
-	for (int j = 0; j < window->items[i].n; j++) {
-		span_unit_t *unit = window->items[i].units + j;
-		unit->color_1 = 0xFFFF;
-		
-		if (i == 6) {
-			unit->color_0 = 0xF727;
-		}
-		
-		if (i == 7) {
-			unit->color_0 = 0xF277;
-		}
-		
-		if (i == 8) {
-			unit->color_0 = 0xF751;
-		}
-		
-		if (i == 9) {
-			unit->color_0 = 0xF272;
-		}
-		
-		if (i == 10) {
-			unit->color_0 = 0xF257;
-		}
-		
-		if (i == 11) {
-			unit->color_0 = 0xF771;
-		}
-		
-		if (i == 12) {
-			unit->color_0 = 0xF722;
-		}
-		
-		if (i == 13) {
-			unit->color_0 = 0xF437;
-		}
-		
-		if (i == 14) {
-			unit->color_0 = 0xF666;
-		}
-		
-		if (i == 15) {
-			unit->color_0 = 0xF666;
-		}
+	span_edit_color_1(window, i, 0xFFFF);
+	
+	if (i == 6) {
+		span_edit_color_0(window, i, 0xF727);
+	}
+	
+	if (i == 7) {
+		span_edit_color_0(window, i, 0xF277);
+	}
+	
+	if (i == 8) {
+		span_edit_color_0(window, i, 0xF751);
+	}
+	
+	if (i == 9) {
+		span_edit_color_0(window, i, 0xF272);
+	}
+	
+	if (i == 10) {
+		span_edit_color_0(window, i, 0xF257);
+	}
+	
+	if (i == 11) {
+		span_edit_color_0(window, i, 0xF771);
+	}
+	
+	if (i == 12) {
+		span_edit_color_0(window, i, 0xF722);
+	}
+	
+	if (i == 13) {
+		span_edit_color_0(window, i, 0xF437);
+	}
+	
+	if (i == 14) {
+		span_edit_color_0(window, i, 0xF666);
+	}
+	
+	if (i == 15) {
+		span_edit_color_0(window, i, 0xF666);
 	}
 }
 
 void menu_on_leave(const span_window_t *window, int i) {
-	for (int j = 0; j < window->items[i].n; j++) {
-		span_unit_t *unit = window->items[i].units + j;
-		unit->color_0 = 0xF000;
-		
-		if (i == 6) {
-			unit->color_1 = 0xFF5F;
-		}
-		
-		if (i == 7) {
-			unit->color_1 = 0xF5FF;
-		}
-		
-		if (i == 8) {
-			unit->color_1 = 0xFFB3;
-		}
-		
-		if (i == 9) {
-			unit->color_1 = 0xF5F5;
-		}
-		
-		if (i == 10) {
-			unit->color_1 = 0xF5BF;
-		}
-		
-		if (i == 11) {
-			unit->color_1 = 0xFFF3;
-		}
-		
-		if (i == 12) {
-			unit->color_1 = 0xFF55;
-		}
-		
-		if (i == 13) {
-			unit->color_1 = 0xF97F;
-		}
-		
-		if (i == 14) {
-			unit->color_1 = 0xFDDD;
-		}
-		
-		if (i == 15) {
-			unit->color_1 = 0xFDDD;
-		}
+	span_edit_color_0(window, i, 0xF000);
+	
+	if (i == 6) {
+		span_edit_color_1(window, i, 0xFF5F);
+	}
+	
+	if (i == 7) {
+		span_edit_color_1(window, i, 0xF5FF);
+	}
+	
+	if (i == 8) {
+		span_edit_color_1(window, i, 0xFFB3);
+	}
+	
+	if (i == 9) {
+		span_edit_color_1(window, i, 0xF5F5);
+	}
+	
+	if (i == 10) {
+		span_edit_color_1(window, i, 0xF5BF);
+	}
+	
+	if (i == 11) {
+		span_edit_color_1(window, i, 0xFFF3);
+	}
+	
+	if (i == 12) {
+		span_edit_color_1(window, i, 0xFF55);
+	}
+	
+	if (i == 13) {
+		span_edit_color_1(window, i, 0xF97F);
+	}
+	
+	if (i == 14) {
+		span_edit_color_1(window, i, 0xFDDD);
+	}
+	
+	if (i == 15) {
+		span_edit_color_1(window, i, 0xFDDD);
 	}
 }
 

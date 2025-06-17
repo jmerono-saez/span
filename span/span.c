@@ -273,6 +273,24 @@ void span_lerp(int *value, int begin_value, int end_value, uint32_t time, uint32
 	span.end_time = span.time + time;
 }
 
+void span_edit_color_0(const span_window_t *window, int i, uint16_t color_0) {
+	const span_object_t *object = window->items + i;
+	
+	for (int j = 0; j < object->n; j++) {
+		span_unit_t *unit = object->units + j;
+		unit->color_0 = color_0;
+	}
+}
+
+void span_edit_color_1(const span_window_t *window, int i, uint16_t color_1) {
+	const span_object_t *object = window->items + i;
+	
+	for (int j = 0; j < object->n; j++) {
+		span_unit_t *unit = object->units + j;
+		unit->color_1 = color_1;
+	}
+}
+
 void span_goto(span_window_t *window, int i) {
 	span_object_t *old_object = window->items + window->i;
 	span_object_t *new_object = window->items + i;
