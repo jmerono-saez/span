@@ -26,7 +26,7 @@ typedef struct span_window_t span_window_t;
 struct span_pipe_t {
 	void (*span)(int n, uint16_t color);
 	void (*copy)(int n, const uint16_t *array);
-	void (*mask)(int n, const uint16_t *array, uint16_t color_0, uint16_t color_1);
+	void (*mask)(int n, const unsigned char *array, uint16_t color_0, uint16_t color_1);
 };
 
 struct span_icon_t {
@@ -35,12 +35,12 @@ struct span_icon_t {
 		SPAN_ICON_MASK,
 	} type;
 	
-	const uint16_t *array;
+	const void *array;
 	int w, h;
 };
 
 struct span_font_t {
-	const uint16_t *array;
+	const unsigned char *array;
 	int w, h;
 	
 	int start, n;

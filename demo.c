@@ -34,7 +34,7 @@ void sdl2_copy(int n, const uint16_t *array) {
 	}
 }
 
-void sdl2_mask(int n, const uint16_t *array, uint16_t color_0, uint16_t color_1) {
+void sdl2_mask(int n, const unsigned char *array, uint16_t color_0, uint16_t color_1) {
 	const int r_0 = (((color_0 >> 8) & 15) * 255) / 15;
 	const int g_0 = (((color_0 >> 4) & 15) * 255) / 15;
 	const int b_0 = (((color_0 >> 0) & 15) * 255) / 15;
@@ -44,7 +44,7 @@ void sdl2_mask(int n, const uint16_t *array, uint16_t color_0, uint16_t color_1)
 	const int b_1 = (((color_1 >> 0) & 15) * 255) / 15;
 	
 	for (int i = 0; i < n; i++) {
-		if (((array[i >> 4] >> (i & 15)) & 1) > 0) {
+		if (((array[i >> 3] >> (i & 7)) & 1) > 0) {
 			SDL_SetRenderDrawColor(sdl2_renderer, r_1, g_1, b_1, 255);
 		} else {
 			SDL_SetRenderDrawColor(sdl2_renderer, r_0, g_0, b_0, 255);

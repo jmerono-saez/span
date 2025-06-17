@@ -112,12 +112,12 @@ void span_draw_unit_text(const span_unit_t *unit, int line) {
 		const int c = (unsigned char)(unit->text[i]) - font->start;
 		const int j = (line + c * font->h) * ((font->w + 15) / 16);
 		
-		const int n = view_size + delta * 8 - ((i - start) * font->w);
+		const int n = view_size + (delta * 8) - ((i - start) * font->w);
 		const int m = (n < font->w ? n : font->w);
 		
 		const int k = (start < i ? 0 : delta);
 		
-		span.pipe.mask(m - (k * 8), (void *)(font->array + j) + k, unit->color_0, unit->color_1);
+		span.pipe.mask(m - (k * 8), font->array + (j * 2) + k, unit->color_0, unit->color_1);
 	}
 	
 	span.pipe.span(unit->w - (view_margin + view_size), unit->color_0);
@@ -133,12 +133,12 @@ void span_draw_unit_icon(const span_unit_t *unit, int line) {
 	
 	if (icon->type == SPAN_ICON_COPY) {
 		const int j = line * icon->w;
-		span.pipe.copy(icon->w, icon->array + j);
+		span.pipe.copy(icon->w, icon->array + (j * 2));
 	}
 	
 	if (icon->type == SPAN_ICON_MASK) {
 		const int j = line * ((icon->w + 15) / 16);
-		span.pipe.mask(icon->w, icon->array + j, unit->color_0, unit->color_1);
+		span.pipe.mask(icon->w, icon->array + (j * 2), unit->color_0, unit->color_1);
 	}
 	
 	span.pipe.span(unit->w - (view_margin + view_size), unit->color_0);

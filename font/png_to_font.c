@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
 	
 	fprintf(file, "\n};\n\n");
 	fprintf(file, "const span_font_t font_%s = (span_font_t) {\n", argv[1]);
-	fprintf(file, "\t.array = array,\n");
+	fprintf(file, "\t.array = (void *)(array),\n");
 	fprintf(file, "\t.w = %d,\n", char_w);
 	fprintf(file, "\t.h = %d,\n", char_h);
 	fprintf(file, "\t.start = %d,\n", char_start);
