@@ -11,6 +11,9 @@ static SDL_Renderer *sdl2_renderer;
 
 static int sdl2_x, sdl2_y;
 
+static bool is_selected = false;
+static int selected_lerp = 0;
+
 void sdl2_span(int n, uint16_t color) {
 	const int r = (((color >> 8) & 15) * 255) / 15;
 	const int g = (((color >> 4) & 15) * 255) / 15;
@@ -145,6 +148,22 @@ void menu_on_leave(const span_window_t *window, int i) {
 	
 	if (i == 15) {
 		span_edit_color_1(window, i, 0xFDDD);
+	}
+}
+
+void menu_on_press(const span_window_t *window, int i) {
+	if (i < 6 || i >= 16) {
+		return;
+	}
+	
+	if (selected_lerp != 0 && selected_lerp != 1024) {
+		return;
+	}
+	
+	if (is_selected) {
+		span_lerp(&selected_lerp, 1024, 0, 500, span_poly_3);
+	} else {
+		span_lerp(&selected_lerp, 0, 1024, 500, span_poly_3);
 	}
 }
 
@@ -650,7 +669,7 @@ int main(void) {
 			.is_fixed = false,
 			.on_enter = menu_on_enter,
 			.on_leave = menu_on_leave,
-			.on_press = NULL,
+			.on_press = menu_on_press,
 		},
 		(span_object_t) {
 			.units = menu_1_units,
@@ -660,7 +679,7 @@ int main(void) {
 			.is_fixed = false,
 			.on_enter = menu_on_enter,
 			.on_leave = menu_on_leave,
-			.on_press = NULL,
+			.on_press = menu_on_press,
 		},
 		(span_object_t) {
 			.units = menu_2_units,
@@ -670,7 +689,7 @@ int main(void) {
 			.is_fixed = false,
 			.on_enter = menu_on_enter,
 			.on_leave = menu_on_leave,
-			.on_press = NULL,
+			.on_press = menu_on_press,
 		},
 		(span_object_t) {
 			.units = menu_3_units,
@@ -680,7 +699,7 @@ int main(void) {
 			.is_fixed = false,
 			.on_enter = menu_on_enter,
 			.on_leave = menu_on_leave,
-			.on_press = NULL,
+			.on_press = menu_on_press,
 		},
 		(span_object_t) {
 			.units = menu_4_units,
@@ -690,7 +709,7 @@ int main(void) {
 			.is_fixed = false,
 			.on_enter = menu_on_enter,
 			.on_leave = menu_on_leave,
-			.on_press = NULL,
+			.on_press = menu_on_press,
 		},
 		(span_object_t) {
 			.units = menu_5_units,
@@ -700,7 +719,7 @@ int main(void) {
 			.is_fixed = false,
 			.on_enter = menu_on_enter,
 			.on_leave = menu_on_leave,
-			.on_press = NULL,
+			.on_press = menu_on_press,
 		},
 		(span_object_t) {
 			.units = menu_6_units,
@@ -710,7 +729,7 @@ int main(void) {
 			.is_fixed = false,
 			.on_enter = menu_on_enter,
 			.on_leave = menu_on_leave,
-			.on_press = NULL,
+			.on_press = menu_on_press,
 		},
 		(span_object_t) {
 			.units = menu_7_units,
@@ -720,7 +739,7 @@ int main(void) {
 			.is_fixed = false,
 			.on_enter = menu_on_enter,
 			.on_leave = menu_on_leave,
-			.on_press = NULL,
+			.on_press = menu_on_press,
 		},
 		(span_object_t) {
 			.units = menu_8_units,
@@ -730,7 +749,7 @@ int main(void) {
 			.is_fixed = false,
 			.on_enter = menu_on_enter,
 			.on_leave = menu_on_leave,
-			.on_press = NULL,
+			.on_press = menu_on_press,
 		},
 		(span_object_t) {
 			.units = menu_9_units,
@@ -740,7 +759,7 @@ int main(void) {
 			.is_fixed = false,
 			.on_enter = menu_on_enter,
 			.on_leave = menu_on_leave,
-			.on_press = NULL,
+			.on_press = menu_on_press,
 		},
 		(span_object_t) {
 			.units = text_scroll_1_units,
@@ -835,6 +854,24 @@ int main(void) {
 		
 		SDL_RenderPresent(sdl2_renderer);
 		
+		if (is_selected) {
+			const int header_h = (36 * (1024 - selected_lerp)) / 1024;
+			
+			root_items[0].h = (header_h - 2 >= 0 ? header_h - 2 : 0);
+			root_items[1].h = (header_h < 2 ? header_h : 2);
+			
+			root_items[root.i].h = ((236 * selected_lerp) / 1024) + 44;
+			root.line = span_midway(&root, root.i) - 140;
+			
+			if (selected_lerp == 0) {
+				is_selected = false;
+			}
+		} else {
+			if (selected_lerp != 0) {
+				is_selected = true;
+			}
+		}
+		
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
 				keep_running = false;
@@ -842,22 +879,28 @@ int main(void) {
 			}
 			
 			if (event.type == SDL_KEYDOWN) {
-				if (event.key.keysym.sym == SDLK_z) {
-					span_last(&root);
+				if (is_selected) {
+					if (event.key.keysym.sym == SDLK_x) {
+						span_press(&root);
+					}
+				} else {
+					if (event.key.keysym.sym == SDLK_z) {
+						span_last(&root);
+						
+						const int offset = (root.i ? (span_midway(&root, root.i) - 140) : 0);
+						span_lerp(&root.line, root.line, offset, 500, span_poly_3);
+					}
 					
-					const int offset = (root.i ? (span_midway(&root, root.i) - 140) : 0);
-					span_lerp(&root.line, root.line, offset, 500, span_poly_3);
-				}
-				
-				if (event.key.keysym.sym == SDLK_x) {
-					span_press(&root);
-				}
-				
-				if (event.key.keysym.sym == SDLK_c) {
-					span_next(&root);
+					if (event.key.keysym.sym == SDLK_x) {
+						span_press(&root);
+					}
 					
-					const int offset = (root.i ? (span_midway(&root, root.i) - 140) : 0);
-					span_lerp(&root.line, root.line, offset, 500, span_poly_3);
+					if (event.key.keysym.sym == SDLK_c) {
+						span_next(&root);
+						
+						const int offset = (root.i ? (span_midway(&root, root.i) - 140) : 0);
+						span_lerp(&root.line, root.line, offset, 500, span_poly_3);
+					}
 				}
 			}
 		}
