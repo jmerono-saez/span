@@ -188,7 +188,7 @@ int main(void) {
 			.w = 160,
 			.align = SPAN_ALIGN_LEFT,
 			.text = "Alarma en 6h 58m",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_NONE,
@@ -250,7 +250,7 @@ int main(void) {
 			.w = 240,
 			.align = SPAN_ALIGN_CENTER,
 			.text = "18 de septiembre",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 	};
 	
@@ -283,7 +283,7 @@ int main(void) {
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
 			.text = "Alarmas",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 	};
 	
@@ -308,7 +308,7 @@ int main(void) {
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
 			.text = "Cron\xA2metro",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 	};
 	
@@ -333,7 +333,7 @@ int main(void) {
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
 			.text = "Temporizador",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 	};
 	
@@ -358,7 +358,7 @@ int main(void) {
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
 			.text = "Pulsos (BPM)",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 	};
 	
@@ -383,7 +383,7 @@ int main(void) {
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
 			.text = "Calendario",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 	};
 	
@@ -408,7 +408,7 @@ int main(void) {
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
 			.text = "Linterna",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 	};
 	
@@ -433,7 +433,7 @@ int main(void) {
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
 			.text = "Afinador",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 	};
 	
@@ -458,7 +458,7 @@ int main(void) {
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
 			.text = "Guitarra",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 	};
 	
@@ -483,7 +483,7 @@ int main(void) {
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
 			.text = "Transferir",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 	};
 	
@@ -508,7 +508,7 @@ int main(void) {
 			.w = 192,
 			.align = SPAN_ALIGN_LEFT,
 			.text = "Configurar",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 	};
 	
@@ -525,7 +525,7 @@ int main(void) {
 			.w = 232,
 			.align = SPAN_ALIGN_CENTER,
 			.text = "Hey! Don't mind me, I'm just testing scrolling <3.",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_NONE,
@@ -547,7 +547,7 @@ int main(void) {
 			.w = 232,
 			.align = SPAN_ALIGN_CENTER,
 			.text = "Now I'm just testing different lengths!",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_NONE,
@@ -569,7 +569,7 @@ int main(void) {
 			.w = 232,
 			.align = SPAN_ALIGN_CENTER,
 			.text = "And this one is meant to be incredibly huge and to scroll quite far.",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_NONE,
@@ -591,7 +591,7 @@ int main(void) {
 			.w = 232,
 			.align = SPAN_ALIGN_CENTER,
 			.text = "This barely scrolls.",
-			.font = &font_terminus_12x24,
+			.font = &font_murcia_12x24,
 		},
 		(span_unit_t) {
 			.type = SPAN_UNIT_NONE,
