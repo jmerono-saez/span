@@ -66,8 +66,10 @@ function renderObject(o) {
 	
 	r += `<div style="width: 100%; height: ${o.h}px;">`;
 	
-	for (const unit of o.units) {
-		r += renderUnit(unit, o.h);
+	for (const unit in o) {
+		if (unit[0] == '$') {
+			r += renderUnit(o[unit], o.h);
+		}
 	}
 	
 	r += `</div>`;
@@ -80,8 +82,10 @@ function renderWindow(w) {
 	
 	r += `<div style="background-color: ${w.color}; width: ${w.w}px; height: ${w.h}px; overflow-y: scroll;">`;
 	
-	for (const item of w.items) {
-		r += renderObject(item);
+	for (const item in w) {
+		if (item[0] == '$') {
+			r += renderObject(w[item]);
+		}
 	}
 	
 	r += `</div>`;
@@ -89,125 +93,108 @@ function renderWindow(w) {
 	return r;
 }
 
-const font_murcia_12x24 = "Terminus:0,24";
-const font_lt_superior_80x160 = "LT Superior:16,132";
-
-const icon_battery_3_28x28 = "battery_android_3:28";
-
 const default_text = `{
-	items: [
-		{
-			units: [
-				{
-					type: "none",
-					color_0: "#000",
-					w: 24,
-				},
-				
-				{
-					type: "text",
-					color_0: "#000",
-					color_1: "#F5F",
-					w: 160,
-					align: "left",
-					text: "Alarma en 6h 58m",
-					font: "Terminus:0,24",
-				},
-				
-				{
-					type: "none",
-					color_0: "#000",
-					w: 4,
-				},
-				
-				{
-					type: "icon",
-					color_0: "#000",
-					color_1: "#FFF",
-					w: 28,
-					align: "center",
-					icon: "battery_android_3:28",
-				},
-				
-				{
-					type: "none",
-					color_0: "#000",
-					w: 24,
-				},
-			],
-			
-			h: 34,
-			is_fixed: true,
-		},
-		
-		{
-			units: [
-				{
-					type: "none",
-					color_0: "#F5F",
-					w: 240,
-				},
-			],
-			
-			h: 2,
-			is_fixed: true,
-		},
-		
-		{
-			units: [
-				{
-					type: "text",
-					color_0: "#000",
-					color_1: "#FFF",
-					w: 240,
-					align: "left",
-					text: "12",
-					font: "LT Superior:16,132",
-				},
-			],
-			
-			h: 100,
-			is_fixed: false,
-		},
-		
-		{
-			units: [
-				{
-					type: "text",
-					color_0: "#000",
-					color_1: "#FFF",
-					w: 240,
-					align: "right",
-					text: "34",
-					font: "LT Superior:16,132",
-				},
-			],
-			
-			h: 100,
-			is_fixed: false,
-		},
-		
-		{
-			units: [
-				{
-					type: "text",
-					color_0: "#000",
-					color_1: "#BBB",
-					w: 240,
-					align: "center",
-					text: "18 de septiembre",
-					font: "Terminus:0,24",
-				},
-			],
-			
-			h: 44,
-			is_fixed: false,
-		},
-	],
-	
 	color: "#000",
 	w: 240,
 	h: 280,
+	
+	$icon_content: {
+		h: 34,
+		is_fixed: true,
+		
+		$fill_l: {
+			type: "none",
+			color_0: "#000",
+			w: 24,
+		},
+		
+		$text: {
+			type: "text",
+			color_0: "#000",
+			color_1: "#F5F",
+			w: 160,
+			align: "left",
+			text: "Alarma en 6h 58m",
+			font: "Terminus:0,24",
+		},
+		
+		$fill_c: {
+			type: "none",
+			color_0: "#000",
+			w: 4,
+		},
+		
+		$battery: {
+			type: "icon",
+			color_0: "#000",
+			color_1: "#FFF",
+			w: 28,
+			align: "center",
+			icon: "battery_android_3:28",
+		},
+		
+		$fill_r: {
+			type: "none",
+			color_0: "#000",
+			w: 24,
+		},
+	},
+	
+	$icon_line: {
+		h: 2,
+		is_fixed: true,
+		
+		$fill: {
+			type: "none",
+			color_0: "#F5F",
+			w: 240,
+		},
+	},
+	
+	$hour: {
+		h: 100,
+		is_fixed: false,
+		
+		$text: {
+			type: "text",
+			color_0: "#000",
+			color_1: "#FFF",
+			w: 240,
+			align: "left",
+			text: "12",
+			font: "LT Superior:16,132",
+		},
+	},
+	
+	$minutes: {
+		h: 100,
+		is_fixed: false,
+		
+		$text: {
+			type: "text",
+			color_0: "#000",
+			color_1: "#FFF",
+			w: 240,
+			align: "right",
+			text: "34",
+			font: "LT Superior:16,132",
+		},
+	},
+	
+	$date: {
+		h: 44,
+		is_fixed: false,
+		
+		$text: {
+			type: "text",
+			color_0: "#000",
+			color_1: "#BBB",
+			w: 240,
+			align: "center",
+			text: "18 de septiembre",
+			font: "Terminus:0,24",
+		},
+	},
 }`;
 
 window.onload = (function() {
